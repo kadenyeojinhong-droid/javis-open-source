@@ -1,0 +1,13 @@
+{
+    "allow_hud":  true,
+    "allow_agent_messages":  true,
+    "breaker_limit":  10,
+    "language":  "zh",
+    "auto_hide":  true,
+    "idle_seconds":  15,
+    "supervisor_model":  "deepseek-v4-flash",
+    "supervisor_fallback":  [
+                                "gemma-4-26b-free",
+                                "deepseek-r1-local"
+                            ]
+}

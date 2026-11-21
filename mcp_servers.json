@@ -1,0 +1,40 @@
+{
+  "memory": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-memory"
+    ]
+  },
+  "git": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@cyanheads/git-mcp-server"
+    ]
+  },
+  "filesystem": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-filesystem",
+      "{ROOT}"
+    ]
+  },
+  "playwright": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@playwright/mcp@latest"
+    ]
+  },
+  "paper-plane": {
+    "command": "{ROOT}\\.venv\\Scripts\\python.exe",
+    "args": [
+      "{ROOT}\\mcp_bridge.py"
+    ]
+  },
+  "custom-tools": {
+    "_disabled": true
+  }
+}

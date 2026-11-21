@@ -1,0 +1,30 @@
+[
+  {
+    "id": "claude",
+    "name": "Claude",
+    "role": "审查与分析",
+    "color": "#FF9F0A",
+    "enabled": true
+  },
+  {
+    "id": "agy",
+    "name": "Antigravity",
+    "role": "规划与压缩",
+    "color": "#64D2FF",
+    "enabled": true
+  },
+  {
+    "id": "codex",
+    "name": "Codex",
+    "role": "编码实现",
+    "color": "#30D158",
+    "enabled": true
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "role": "本地助手与蒸馏",
+    "color": "#4D6BFE",
+    "enabled": true
+  }
+]

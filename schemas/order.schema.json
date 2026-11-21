@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderSchema",
+  "type": "object",
+  "required": ["goal", "constraints", "files", "options"],
+  "properties": {
+    "goal": {
+      "type": "string",
+      "description": "User's goal description"
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of constraints"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of relevant files"
+    },
+    "options": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "summary", "modules"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["A", "B", "C"],
+            "description": "Option ID: A=极速轻量, B=稳健工程, C=零新依赖复用"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the option"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Summary of the option"
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of modules involved"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Exactly 3 options: A (极速轻量), B (稳健工程), C (零新依赖复用)"
+    }
+  },
+  "additionalProperties": false
+}
