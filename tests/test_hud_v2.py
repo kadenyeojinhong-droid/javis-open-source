@@ -90,3 +90,11 @@ def test_console_without_console_and_workbench_missing(tmp_path, monkeypatch):
     assert c.post("/console", json={"show": True}).json() == {"ok": False}
     monkeypatch.setattr(hud_server, "JAVIS_SCRIPT", tmp_path / "missing.ps1")
     assert c.post("/workbench").status_code == 404
+
+
+def test_rejects_foreign_origin_and_rebound_host(tmp_path, monkeypatch):
+    c = setup(tmp_path, monkeypatch)
+    assert c.get("/state").status_code == 200
+    assert c.get("/state", headers={"origin": "https://evil.com"}).status_code == 403
+    assert c.get("/state", headers={"host": "evil.com:8765"}).status_code == 403
+    assert c.get("/state", headers={"host": "127.0.0.1:8765"}).status_code == 200

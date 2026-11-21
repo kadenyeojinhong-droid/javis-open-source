@@ -51,10 +51,15 @@ def _foreign(origin):
     return bool(origin) and re.fullmatch(r"https?://(127\.0\.0\.1|localhost)(:\d+)?", origin) is None
 
 
+def _bad_host(host):
+    # DNS rebinding: evil.com resolving to 127.0.0.1 sends same-origin GETs with no Origin but Host: evil.com
+    return re.fullmatch(r"(127\.0\.0\.1|localhost|testserver)(:\d+)?", host or "") is None
+
+
 @app.middleware("http")
 async def local_pages_only(request, call_next):
     # any web page could otherwise POST here (no-body POSTs skip the browser's preflight): reset the breaker, open the workbench
-    if _foreign(request.headers.get("origin")):
+    if _foreign(request.headers.get("origin")) or _bad_host(request.headers.get("host")):
         return JSONResponse({"error": "forbidden origin"}, status_code=403)
     return await call_next(request)
 
@@ -150,7 +155,7 @@ def state():
 
 @app.websocket("/ws")
 async def ws(websocket: WebSocket):
-    if _foreign(websocket.headers.get("origin")):  # http middleware does not cover websockets
+    if _foreign(websocket.headers.get("origin")) or _bad_host(websocket.headers.get("host")):  # http middleware does not cover websockets
         await websocket.close(code=1008)
         return
     await websocket.accept()

@@ -55,6 +55,13 @@ Hotkeys: `Ctrl+Alt+A` show/hide capsule, `Ctrl+Alt+T` open the 2x2 terminal.
 API keys come only from environment variables (`OPENROUTER_API_KEY`, `GEMINI_API_KEY`, `CLIPROXY_API_KEY`). Never commit them.
 Runtime data (`.ai_bus/logs`, `inbox`, `distill`, `llm_calls.jsonl`) is git-ignored because it holds your chats.
 
+## Security
+
+- `hud_server.py` listens on `127.0.0.1:8765` only and has no login. Do not change the host to `0.0.0.0` or forward the port: anyone who reaches it can dispatch tasks to your agents.
+- Requests from web pages are refused: a foreign `Origin` header or a `Host` other than `127.0.0.1` / `localhost` gets `403` (blocks CSRF and DNS rebinding). WebSockets get the same check.
+- Agents run real CLIs (Claude Code, Codex, ...) with your permissions. Code from stand-in models is written into a separate git worktree and needs approval (`python approve.py`) before it is merged.
+- Logs, transcripts and approvals stay local and are git-ignored. `transcripts.py` masks key-like strings before saving.
+
 ## License
 
 MIT, see [LICENSE](LICENSE). Bundled Inter font: SIL OFL, see `ui/fonts/Inter-LICENSE.txt`.
